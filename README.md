@@ -9,7 +9,7 @@ This is the code for [this](https://youtu.be/xRJCOz3AfYY) video on Youtube by Si
 The data set used here is `House Sales in King County, USA` from [Kaggle](https://www.kaggle.com/harlfoxem/housesalesprediction).
 
 Note that instead of having `m` and `b` in `y=mx+b` as seperate variables, I added both variables in `weight`.
-This way, we can predict the price by matrix multiplication. It served 2 purposes: shortening code (no need for looping through each data point), faster (computer can work faster with matrix)
+This way, we can predict the price by matrix multiplication. It served 2 purposes: shortening code (no need for looping through each data point) and faster computation (computer can work faster with matrix)
 
 ## More about Gradient Descent
 Here are some helpful links:
