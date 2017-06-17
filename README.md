@@ -1,5 +1,6 @@
 # Gradient Descent Coding Challenge
-Code by: Woratana Ngarmtrakulchol
+Code written by: Woratana Ngarmtrakulchol
+
 This is the code for "Intro - The Math of Intelligence" by Siraj Raval on [Youtube](https://youtu.be/xRJCOz3AfYY)
 
 ## Overview
