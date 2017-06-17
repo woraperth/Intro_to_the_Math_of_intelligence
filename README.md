@@ -1,16 +1,15 @@
-# Intro_to_the_Math_of_intelligence
-This is the code for "Intro - The Math of Intelligence" by Siraj Raval on Youtube
-
-## Coding Challenge -- Due Date, Thursday June 22nd, 2017
-
-This week's coding challenge is to implement gradient descent to find the line of best fit that predicts the relationship between
-2 variables of your choice from a [kaggle](https://www.kaggle.com/datasets) dataset. Bonus points for detailed documentation. Good luck! Post your github link in the youtube comments section
+# Gradient Descent Coding Challenge
+Code by: Woratana
+This is the code for "Intro - The Math of Intelligence" by Siraj Raval on [Youtube](https://youtu.be/xRJCOz3AfYY)
 
 ## Overview
+This is the code for [this](https://youtu.be/xRJCOz3AfYY) video on Youtube by Siraj Raval.
+The data set used here is `House Sales in King County, USA` from [Kaggle](https://www.kaggle.com/harlfoxem/housesalesprediction).
 
-This is the code for [this](https://youtu.be/xRJCOz3AfYY) video on Youtube by Siraj Raval. The dataset represents distance cycled 
-vs calories burned. We'll create the line of best fit (linear regression) via gradient descent to predict the mapping. yes, I left out talking about the learning rate in the video, we're not ready to talk about that yet. 
+Note that instead of having `m` and `b` in `y=mx+b` as seperate variables, I added both variables in `weight`.
+This way, we can predict the price by matrix multiplication. It served 2 purposes: shortening code (no need for looping through each data point), faster (computer can work faster with matrix)
 
+## More about Gradient Descent
 Here are some helpful links:
 
 #### Gradient descent visualization
@@ -24,20 +23,20 @@ https://spin.atomicobject.com/wp-content/uploads/linear_regression_gradient1.png
 
 ## Dependencies
 
-* numpy
-
-Python 2 and 3 both work for this. Use [pip](https://pip.pypa.io/en/stable/) to install any dependencies.
+* numpy - For matrix multiplication
+* pandas - Maybe unnecessary, but made the code a lot easier to read
+* sklearns - For scaling input and output
 
 ## Usage
 
-Just run ``python3 demo.py`` to see the results:
+Just run ``python test.py`` to see the results:
 
    ```
-Starting gradient descent at b = 0, m = 0, error = 5565.107834483211
+Starting gradient descent at weight = [ 0.02193762  0.11478817], error = 0.8513764945994572
 Running...
-After 1000 iterations b = 0.08893651993741346, m = 1.4777440851894448, error = 112.61481011613473
+After 100 iterations weight = [ 0.53208446  0.62493501], error = 0.5096657356181261
    ```
 
 ## Credits
 
-Credits for this code go to [mattnedrich](https://github.com/mattnedrich). I've merely created a wrapper to get people started. 
+Thank you Matt Nedrich and Siraj Raval for the sample code. I did rewrite all the functions, but following the same structure.

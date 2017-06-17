@@ -6,10 +6,13 @@
 
 # Import libraries
 import pandas as pd
-from numpy import *
+import numpy as np
+from sklearn.preprocessing import scale
 
 # -------------------------------------------
 # Data checking
+# -------------------------------------------
+# We will choose 1 column to predict price in this step.
 # -------------------------------------------
 # Read data
 # mydata = pd.read_csv('kc_house_data.csv')
@@ -28,46 +31,62 @@ from numpy import *
 # -----------------------------------------------------
 # Gradient Descent code by Matt Nedrich and Siraj Raval
 # -----------------------------------------------------
-# y = mx + b
-# m is slope, b is y-intercept
-def compute_error_for_line_given_points(b, m, points):
-    totalError = 0
-    for i in range(0, len(points)):
-        x = points[i, 0]
-        y = points[i, 1]
-        totalError += (y - (m * x + b)) ** 2
-    return totalError / float(len(points))
+# Instead of having separate variables m and b,
+# One variable called `weight` is created, which consisted of 2 columns (m and b)
+# Therefore, in predict_price function, we used matrix multiplication
+# -----------------------------------------------------
 
-def step_gradient(b_current, m_current, points, learningRate):
-    b_gradient = 0
-    m_gradient = 0
-    N = float(len(points))
-    for i in range(0, len(points)):
-        x = points[i, 0]
-        y = points[i, 1]
-        b_gradient += -(2/N) * (y - ((m_current * x) + b_current))
-        m_gradient += -(2/N) * x * (y - ((m_current * x) + b_current))
-    new_b = b_current - (learningRate * b_gradient)
-    new_m = m_current - (learningRate * m_gradient)
-    return [new_b, new_m]
+def compute_error(this_weight, data):
+    # Calculate Error
+    predict = predict_price(this_weight, data['x'])
+    sumError = np.sum( (data['y'] - predict)**2 ) # sum of squared error
+    error = sumError / float(len(data['y'])) # divide by no. of row
+    return error
 
-def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_iterations):
-    b = starting_b
-    m = starting_m
-    for i in range(num_iterations):
-        b, m = step_gradient(b, m, array(points), learning_rate)
-    return [b, m]
+def predict_price(this_weight, data):
+    return np.dot(data, this_weight)
+
+def gradient_descent_runner(this_weight, data, learning_rate):
+    # Calculate slope
+    N = float(len(data['y'])) # no. of row
+    C = float(data['x'].shape[1]) # no. of predicting variables
+    # Definition: Slope = (2/N) * (target_y - predict_y) * (-x)
+    error = data['y'] - predict_price(this_weight, data['x'])
+    slope = -(2/N) * np.repeat(error, repeats=C).reshape(N, C) * data['x'] # Transform error into matrix
+    # Calculate new weight
+    new_weight = this_weight - (learning_rate * np.sum(slope))
+    return new_weight
 
 def run():
-    points = genfromtxt("data.csv", delimiter=",")
-    learning_rate = 0.0001
-    initial_b = 0 # initial y-intercept guess
-    initial_m = 0 # initial slope guess
-    num_iterations = 1000
-    print ("Starting gradient descent at b = {0}, m = {1}, error = {2}".format(initial_b, initial_m, compute_error_for_line_given_points(initial_b, initial_m, points)))
+    #Initialize variables
+    learning_rate = 0.01 # Learning rate
+    num_iterations = 100 # Number of iteration
+    num_data = 1000 # Number of data
+
+    # Load data and select 2 columns
+    mydata = pd.read_csv('kc_house_data.csv')
+    predict_data = mydata[['sqft_living', 'price']]
+    # Subset data
+    predict_data = predict_data.iloc[:num_data,]
+    # Add intercept column
+    predict_data['intercept'] = 1
+    # Transform inputs to Matrix & Scale input to make prediction easier
+    predict_datamat = {}
+    predict_datamat['x'] = scale(predict_data.as_matrix(columns=['intercept', 'sqft_living']))
+    predict_datamat['y'] = scale(predict_data['price'].as_matrix())
+
+    # Record weight update (slope m and intercept b) in `weight
+    weight = np.zeros(shape=(num_iterations, predict_datamat['x'].shape[1])) # why weight has 2 columns ? For slope and intercept
+    weight[0] = np.random.rand(1, weight.shape[1]) # Random with shape (1, number of column in weight)
+
+    print ("Starting gradient descent at weight = {0}, error = {1}".format(weight[0], compute_error(weight[0], predict_datamat)))
     print ("Running...")
-    [b, m] = gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_iterations)
-    print ("After {0} iterations b = {1}, m = {2}, error = {3}".format(num_iterations, b, m, compute_error_for_line_given_points(b, m, points)))
+
+    # Run Gradient Descent
+    for i in range(1, num_iterations):
+        weight[i] = gradient_descent_runner(weight[i - 1], predict_datamat, learning_rate)
+        print('Iteration', i, weight[i], compute_error( weight[i], predict_datamat ))
+    print ("After {0} iterations weight = {1}, error = {2}".format(num_iterations, weight[num_iterations - 1], compute_error(weight[num_iterations - 1], predict_datamat)))
 
 if __name__ == '__main__':
     run()
