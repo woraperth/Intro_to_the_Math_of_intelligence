@@ -4,6 +4,7 @@ This is the code for "Intro - The Math of Intelligence" by Siraj Raval on [Youtu
 
 ## Overview
 This is the code for [this](https://youtu.be/xRJCOz3AfYY) video on Youtube by Siraj Raval.
+
 The data set used here is `House Sales in King County, USA` from [Kaggle](https://www.kaggle.com/harlfoxem/housesalesprediction).
 
 Note that instead of having `m` and `b` in `y=mx+b` as seperate variables, I added both variables in `weight`.
