@@ -2,6 +2,8 @@
 # == Gradient Descent for House Price Prediction ==
 # Data Source: House Sales in King County, USA (https://www.kaggle.com/harlfoxem/housesalesprediction)
 # Environment: Python 3.6
+
+# Author: Woratana Ngarmtrakulchol
 # -------------------------------------------------
 
 # Import libraries

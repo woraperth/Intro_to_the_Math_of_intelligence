@@ -1,5 +1,5 @@
 # Gradient Descent Coding Challenge
-Code by: Woratana
+Code by: Woratana Ngarmtrakulchol
 This is the code for "Intro - The Math of Intelligence" by Siraj Raval on [Youtube](https://youtu.be/xRJCOz3AfYY)
 
 ## Overview
@@ -30,7 +30,7 @@ https://spin.atomicobject.com/wp-content/uploads/linear_regression_gradient1.png
 
 ## Usage
 
-Just run ``python test.py`` to see the results:
+Just run ``python gd.py`` to see the results:
 
    ```
 Starting gradient descent at weight = [ 0.02193762  0.11478817], error = 0.8513764945994572
